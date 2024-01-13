@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Tecnology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -34,12 +35,15 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+
         $request->validate([
             'name' => 'required|max:255|string|unique:projects',
             'description' => 'nullable|string',
             'tecnologies' => 'exists:tecnologies,id',
+            'img' => 'required|file|max:2048',
         ]);
+        $data = $request->all();
+        $data['img'] = $request->file('img')->store('public/images');
         $project = Project::create($data);
         if ($request->has('tecnologies')) {
             $project->tecnologies()->attach($data['tecnologies']);

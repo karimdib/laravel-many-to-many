@@ -5,14 +5,15 @@
         <div class="col-4">
             <p>{{$project->name}}</p>
             <p>{{$project->description}}</p>
-            <p>{{isset($project->type) ? $project->type->name : '-' }}</p>
-            <ul class="d-flex  gap-3">
+            <p class="">{{isset($project->type) ? $project->type->name : '-' }}</p>
+            <ul class=" d-flex gap-3">
                 @forelse ($project->tecnologies as $tecnology)
                 <p>{{ $tecnology['name']}}</p>
                 @empty
                 <p>non ci sono tecnologie</p>
                 @endforelse
             </ul>
+            <img src="{{ asset('storage/' . $project->img) }}" alt="Immagine del progetto">
         </div>
 
 
